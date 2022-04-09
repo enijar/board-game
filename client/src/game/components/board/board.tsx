@@ -13,8 +13,8 @@ type Props = {
 };
 
 export default function Board({
-  originalWidth = 1200,
-  originalHeight = 800,
+  originalWidth = 500,
+  originalHeight = 500,
   tiles = [],
 }: Props) {
   const [hoveringTileId, setHoveringTileId] = React.useState(0);
