@@ -1,6 +1,7 @@
 import React from "react";
 import * as THREE from "three";
 import Tile from "@/game/components/board/tile";
+import tiles from "@/game/config/tiles";
 
 type Props = {
   width?: number;
@@ -8,44 +9,6 @@ type Props = {
   originalWidth?: number;
   originalHeight?: number;
 };
-
-const tiles = [
-  {
-    id: 1,
-    x: 61.5,
-    y: 310.5,
-    width: 209,
-    height: 160.5,
-  },
-  {
-    id: 2,
-    x: 222,
-    y: 39.5,
-    width: 257.5,
-    height: 358,
-  },
-  {
-    id: 3,
-    x: 26.5,
-    y: 147.5,
-    width: 244,
-    height: 163.5,
-  },
-  {
-    id: 4,
-    x: 117.5,
-    y: 31.5,
-    width: 153,
-    height: 162,
-  },
-  {
-    id: 5,
-    x: 39.5,
-    y: 54.5,
-    width: 104,
-    height: 107,
-  },
-];
 
 export default function Board({
   width = 4,
@@ -59,7 +22,7 @@ export default function Board({
   const scale = width / originalWidth;
 
   const getColor = React.useCallback(
-    (tile): THREE.ColorRepresentation => {
+    (tile) => {
       if (selectedTileId === tile.id) {
         return "#00ff00";
       }
@@ -108,14 +71,17 @@ export default function Board({
               scale={scale}
               x={x}
               y={y}
-              onPointerOver={() => {
+              onPointerOver={(event) => {
+                event.stopPropagation();
                 setHoveringTileId(tile.id);
               }}
-              onPointerOut={() => {
+              onPointerOut={(event) => {
+                event.stopPropagation();
                 setHoveringTileId(0);
               }}
-              onPointerDown={() => {
-                setSelectedTileId(tile.id);
+              onPointerDown={(event) => {
+                event.stopPropagation();
+                setSelectedTileId(selectedTileId === tile.id ? 0 : tile.id);
               }}
             />
           );

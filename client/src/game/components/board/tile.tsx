@@ -2,13 +2,14 @@ import React from "react";
 import * as THREE from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
 import { ThreeEvent, useLoader } from "@react-three/fiber";
+import { a, useSpring } from "@react-spring/three";
 
 type Props = {
   image: string;
   scale?: number;
   x?: number;
   y?: number;
-  color: THREE.ColorRepresentation;
+  color: string;
   onPointerOver?: (event: ThreeEvent<PointerEvent>) => void;
   onPointerOut?: (event: ThreeEvent<PointerEvent>) => void;
   onPointerDown?: (event: ThreeEvent<PointerEvent>) => void;
@@ -26,6 +27,14 @@ export default function Tile({
 }: Props) {
   const svg = useLoader(SVGLoader, image);
 
+  const [props, set] = useSpring(() => {
+    return { color };
+  });
+
+  React.useEffect(() => {
+    set.start({ color });
+  }, [color]);
+
   return (
     <group
       scale={scale}
@@ -42,8 +51,8 @@ export default function Tile({
                 return (
                   <mesh key={index} scale={[1, -1, 1]}>
                     <shapeBufferGeometry args={[shape]} />
-                    <meshBasicMaterial
-                      color={color}
+                    <a.meshBasicMaterial
+                      color={props.color}
                       side={THREE.DoubleSide}
                       depthWrite={false}
                     />

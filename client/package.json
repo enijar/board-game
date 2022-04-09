@@ -40,6 +40,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "@react-spring/three": "^9.4.4",
     "@react-three/drei": "^9.1.7",
     "@react-three/fiber": "^8.0.10",
     "react": "^18.0.0",
