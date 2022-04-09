@@ -12,8 +12,42 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <title>App</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+      }
+
+      html {
+        font-size: 20px;
+        font-family: Arial, sans-serif;
+        font-weight: normal;
+        line-height: 1.2;
+        background-color: #1e1e1e;
+        color: #fefefe;
+      }
+
+      html,
+      body,
+      #root {
+        width: 100%;
+        height: 100%;
+      }
+
+      #root {
+        display: grid;
+        place-items: center;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <span>Loading...</span>
+    </div>
   </body>
 </html>

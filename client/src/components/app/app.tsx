@@ -2,14 +2,14 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AppReset } from "@/components/app/app.styles";
 
-const Game = React.lazy(() => import("@/pages/game/game"));
+const Home = React.lazy(() => import("@/pages/home/home"));
 
 export default function App() {
   return (
-    <React.Suspense fallback="Loading...">
+    <React.Suspense fallback={<span>Loading...</span>}>
       <AppReset />
       <Routes>
-        <Route path="/" element={<Game />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </React.Suspense>
   );
