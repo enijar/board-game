@@ -2,12 +2,7 @@ import React from "react";
 import useListener from "@/game/hooks/use-listener";
 import { Action } from "@/game/types";
 
-type UseAction = {
-  actions: Action[];
-  has: (action: Action) => boolean;
-};
-
-export default function useActions(): UseAction {
+export default function useActions(): Action[] {
   const [actions, setActions] = React.useState<Action[]>([]);
 
   function getActionFromKey(key: string) {
@@ -50,12 +45,5 @@ export default function useActions(): UseAction {
     });
   });
 
-  return React.useMemo(() => {
-    return {
-      actions,
-      has(action) {
-        return actions.includes(action);
-      },
-    };
-  }, [actions]);
+  return actions;
 }

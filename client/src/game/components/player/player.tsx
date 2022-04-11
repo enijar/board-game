@@ -9,17 +9,21 @@ export default function Player() {
 
   useFrame(() => {
     playerState.velocity.set(0, 0, 0);
-    if (actions.has(Action.left)) {
-      playerState.velocity.x = 1;
-    }
-    if (actions.has(Action.right)) {
-      playerState.velocity.x = -1;
-    }
-    if (actions.has(Action.up)) {
-      playerState.velocity.y = -1;
-    }
-    if (actions.has(Action.down)) {
-      playerState.velocity.y = 1;
+    for (let i = 0, length = actions.length; i < length; i++) {
+      switch (actions[i]) {
+        case Action.up:
+          playerState.velocity.y = -1;
+          break;
+        case Action.down:
+          playerState.velocity.y = 1;
+          break;
+        case Action.left:
+          playerState.velocity.x = 1;
+          break;
+        case Action.right:
+          playerState.velocity.x = -1;
+          break;
+      }
     }
   });
 
