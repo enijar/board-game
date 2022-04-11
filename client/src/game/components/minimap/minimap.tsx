@@ -17,7 +17,7 @@ export default function Minimap() {
 
     const cam = camera as THREE.PerspectiveCamera;
     const fov = THREE.MathUtils.degToRad(cam.fov);
-    const height = 2 * Math.tan(fov / 2) * cam.position.z;
+    const height = 2 * Math.tan(fov / 2) * cameraConfig.position.z;
     const width = height * cam.aspect;
 
     group.position.set(
