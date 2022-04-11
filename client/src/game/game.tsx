@@ -10,8 +10,8 @@ export default function Game() {
     <Canvas flat linear dpr={1}>
       <React.Suspense fallback={<Text>Loading...</Text>}>
         <Map />
-        <Camera />
         <Player />
+        <Camera />
       </React.Suspense>
     </Canvas>
   );

@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import useActions from "@/game/hooks/use-actions";
 import { Action } from "@/game/types";
 import playerState from "@/game/state/player";
+import playerConfig from "@/game/config/player";
 
 export default function Player() {
   const actions = useActions();
@@ -30,7 +31,7 @@ export default function Player() {
   return (
     <group>
       <mesh>
-        <planeBufferGeometry />
+        <planeBufferGeometry args={[playerConfig.width, playerConfig.height]} />
         <meshBasicMaterial color="crimson" depthWrite={false} />
       </mesh>
     </group>
