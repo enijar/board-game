@@ -1,6 +1,6 @@
 import React from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import mapConfig from "@/game/config/map";
 import playerConfig from "@/game/config/player";
 import cameraConfig from "@/game/config/camera";
@@ -11,24 +11,26 @@ export default function Minimap() {
   const groupRef = React.createRef<THREE.Group>();
   const playerMeshRef = React.createRef<THREE.Mesh>();
 
-  useFrame(({ camera }) => {
-    const group = groupRef.current;
-    const playerMesh = playerMeshRef.current;
+  const { size, camera } = useThree();
 
+  React.useEffect(() => {
+    const group = groupRef.current;
     const cam = camera as THREE.PerspectiveCamera;
     const fov = THREE.MathUtils.degToRad(cam.fov);
     const height = 2 * Math.tan(fov / 2) * cameraConfig.position.z;
     const width = height * cam.aspect;
-
     group.position.set(
       width * -0.5 + minimapConfig.width * 0.5 + 0.5,
       height * -0.5 + minimapConfig.height * 0.5 + 0.5,
-      cameraConfig.position.z * -1
+      group.position.z
     );
+  }, [size, camera]);
 
+  useFrame(() => {
+    const playerMesh = playerMeshRef.current;
     playerMesh.position
       .copy(playerState.position)
-      .multiplyScalar((minimapConfig.width / mapConfig.width) * -1);
+      .multiplyScalar(minimapConfig.width / mapConfig.width);
   });
 
   return (

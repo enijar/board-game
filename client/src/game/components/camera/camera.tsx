@@ -1,13 +1,38 @@
 import React from "react";
+import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import Minimap from "@/game/components/minimap/minimap";
 import cameraConfig from "@/game/config/camera";
+import playerState from "@/game/state/player";
+import mapConfig from "@/game/config/map";
 
-export default function Camera() {
+type Props = {
+  children?: React.ReactNode;
+};
+
+export default function Camera({ children }: Props) {
+  const [min, max] = React.useMemo(() => {
+    return [
+      new THREE.Vector3(mapConfig.width * -0.5, mapConfig.height * -0.5, 0),
+      new THREE.Vector3(mapConfig.width * 0.5, mapConfig.height * 0.5, 0),
+    ];
+  }, []);
+
+  useFrame(({ camera }) => {
+    playerState.position
+      .add(playerState.velocity.multiplyScalar(playerState.speed))
+      .clamp(min, max);
+    camera.position.copy(playerState.position);
+    camera.position.z = cameraConfig.position.z;
+    camera.rotation.set(0, 0, 0);
+  });
+
   return (
-    <PerspectiveCamera makeDefault position={cameraConfig.position}>
-      <Minimap />
+    <>
+      <PerspectiveCamera makeDefault position={cameraConfig.position}>
+        <group position-z={cameraConfig.position.z * -1}>{children}</group>
+      </PerspectiveCamera>
       <OrbitControls makeDefault />
-    </PerspectiveCamera>
+    </>
   );
 }

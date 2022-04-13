@@ -13,16 +13,16 @@ export default function Player() {
     for (let i = 0, length = actions.length; i < length; i++) {
       switch (actions[i]) {
         case Action.up:
-          playerState.velocity.y = -1;
-          break;
-        case Action.down:
           playerState.velocity.y = 1;
           break;
+        case Action.down:
+          playerState.velocity.y = -1;
+          break;
         case Action.left:
-          playerState.velocity.x = 1;
+          playerState.velocity.x = -1;
           break;
         case Action.right:
-          playerState.velocity.x = -1;
+          playerState.velocity.x = 1;
           break;
       }
     }
