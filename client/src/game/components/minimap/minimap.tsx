@@ -8,8 +8,8 @@ import minimapConfig from "@/game/config/minimap";
 import playerState from "@/game/state/player";
 
 export default function Minimap() {
-  const groupRef = React.useRef<THREE.Group>();
-  const playerMeshRef = React.useRef<THREE.Mesh>();
+  const groupRef = React.createRef<THREE.Group>();
+  const playerMeshRef = React.createRef<THREE.Mesh>();
 
   useFrame(({ camera }) => {
     const group = groupRef.current;
