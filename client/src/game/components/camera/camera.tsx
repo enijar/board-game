@@ -1,7 +1,7 @@
 import React from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { PerspectiveCamera } from "@react-three/drei";
 import cameraConfig from "@/game/config/camera";
 import playerState from "@/game/state/player";
 import mapConfig from "@/game/config/map";
@@ -32,7 +32,6 @@ export default function Camera({ children }: Props) {
       <PerspectiveCamera makeDefault position={cameraConfig.position}>
         <group position-z={cameraConfig.position.z * -1}>{children}</group>
       </PerspectiveCamera>
-      <OrbitControls makeDefault />
     </>
   );
 }
