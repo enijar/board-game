@@ -6,6 +6,7 @@ import { Action } from "@/game/types";
 import playerState from "@/game/state/player";
 import playerConfig from "@/game/config/player";
 import { Direction } from "@/types";
+import { TextureFilter } from "three/src/constants";
 
 function TextureAnimator(
   texture: THREE.Texture,
@@ -55,6 +56,8 @@ export default function Player() {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const texture = new THREE.Texture(canvas);
+    texture.minFilter = THREE.NearestFilter;
+    texture.magFilter = THREE.NearestFilter;
     return { canvas, ctx, texture };
   }, []);
 
