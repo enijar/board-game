@@ -1,7 +1,7 @@
 import * as THREE from "three";
-import { Direction } from "@/types";
+import { Direction, PlayerState } from "@/types";
 
-const playerState = {
+const playerState: PlayerState = {
   direction: Direction.none,
   position: new THREE.Vector3(0, 0, 0),
   velocity: new THREE.Vector3(0, 0, 0),

@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export type Point = [x: number, y: number];
 
 export type TileType = {
@@ -15,3 +17,10 @@ export enum Direction {
   left = 3,
   right = 4,
 }
+
+export type PlayerState = {
+  direction: Direction;
+  position: THREE.Vector3;
+  velocity: THREE.Vector3;
+  speed: number;
+};

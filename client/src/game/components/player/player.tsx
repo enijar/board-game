@@ -86,24 +86,22 @@ export default function Player() {
       if (now - lastFrameTime < frameDelay) return;
       lastFrameTime = now;
 
-      if (playerState.direction === Direction.none) {
-        frameX = 0;
-      }
-
-      if (playerState.direction === Direction.up) {
-        frameY = 3;
-      }
-
-      if (playerState.direction === Direction.down) {
-        frameY = 0;
-      }
-
-      if (playerState.direction === Direction.left) {
-        frameY = 1;
-      }
-
-      if (playerState.direction === Direction.right) {
-        frameY = 2;
+      switch (playerState.direction) {
+        case Direction.none:
+          frameX = 0;
+          break;
+        case Direction.up:
+          frameY = 3;
+          break;
+        case Direction.down:
+          frameY = 0;
+          break;
+        case Direction.left:
+          frameY = 1;
+          break;
+        case Direction.right:
+          frameY = 2;
+          break;
       }
 
       ctx.clearRect(0, 0, frameWidth, frameHeight);
@@ -131,7 +129,6 @@ export default function Player() {
   }, [canvas, ctx, texture]);
 
   useFrame(() => {
-    playerState.velocity.set(0, 0, 0);
     let direction: Direction = 0;
     for (let i = 0, length = actions.length; i < length; i++) {
       switch (actions[i]) {
@@ -165,6 +162,8 @@ export default function Player() {
       case Direction.right:
         playerState.velocity.x = 1;
         break;
+      default:
+        playerState.velocity.set(0, 0, 0);
     }
     playerState.direction = direction;
   });
