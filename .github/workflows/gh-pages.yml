@@ -17,6 +17,7 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
+          rm -rf client/node_modules client/package-lock.json
           npm --prefix client install
           PUBLIC_PATH=./ npm --prefix client run build
       - name: Deploy
