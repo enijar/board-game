@@ -2,10 +2,9 @@ import React from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import useActions from "@/game/hooks/use-actions";
-import { Action } from "@/game/types";
+import { Action, Direction } from "@/game/types";
 import playerState from "@/game/state/player";
 import playerConfig from "@/game/config/player";
-import { Direction } from "@/types";
 import { asset } from "@/utils";
 
 export default function Player() {

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Direction, PlayerState } from "@/types";
+import { Direction, PlayerState } from "@/game/types";
 
 const playerState: PlayerState = {
   direction: Direction.none,
