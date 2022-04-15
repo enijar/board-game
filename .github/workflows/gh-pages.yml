@@ -15,11 +15,13 @@ jobs:
           lfs: true
           persist-credentials: false
 
-      - name: Install and Build 🔧
+      - name: Install and Build
         run: |
-          rm -rf client/node_modules client/package-lock.json
-          npm --prefix client install
-          PUBLIC_PATH=./ npm --prefix client run build
+          cd client
+          rm -rf node_modules package-lock.json
+          npm install
+          PUBLIC_PATH=./ npm run build
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.8
         with:
