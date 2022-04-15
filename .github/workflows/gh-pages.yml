@@ -1,0 +1,28 @@
+name: GH Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+        with:
+          lfs: true
+          persist-credentials: false
+
+      - name: Install and Build 🔧
+        run: |
+          npm --prefix client install
+          PUBLIC_PATH=./ npm --prefix client run build
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: client/build
+          clean: true
