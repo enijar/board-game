@@ -2,9 +2,10 @@ import React from "react";
 import * as THREE from "three";
 import { useTexture } from "@react-three/drei";
 import mapConfig from "@/game/config/map";
+import { asset } from "@/utils";
 
 export default function Map() {
-  const texture = useTexture("/assets/map.png");
+  const texture = useTexture(asset("/assets/map.png"));
 
   React.useMemo(() => {
     texture.wrapS = THREE.RepeatWrapping;

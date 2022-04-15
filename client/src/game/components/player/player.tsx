@@ -6,6 +6,7 @@ import { Action } from "@/game/types";
 import playerState from "@/game/state/player";
 import playerConfig from "@/game/config/player";
 import { Direction } from "@/types";
+import { asset } from "@/utils";
 
 export default function Player() {
   const actions = useActions();
@@ -22,7 +23,7 @@ export default function Player() {
   React.useEffect(() => {
     const sprite = new Image();
     sprite.onload = () => updateSprite();
-    sprite.src = "/assets/player.png";
+    sprite.src = asset("/assets/player.png");
 
     const frameDelay = 1000 / 8;
     const framesX = 4;

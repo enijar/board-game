@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as webpack from "webpack";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import * as CopyPlugin from "copy-webpack-plugin";
 import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -8,7 +9,8 @@ const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
-const DEV_MODE = process.env.NODE_ENV === "development";
+const NODE_ENV = process.env.NODE_ENV ?? "development";
+const DEV_MODE = NODE_ENV === "development";
 const SRC_DIR = path.resolve(__dirname, "src");
 const PUBLIC_DIR = path.resolve(__dirname, "public");
 const BUILD_DIR = path.resolve(__dirname, "build");
@@ -75,6 +77,10 @@ const config = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(NODE_ENV),
+      "process.env.PUBLIC_PATH": JSON.stringify(PUBLIC_PATH),
+    }),
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(PUBLIC_DIR, "index.html"),
