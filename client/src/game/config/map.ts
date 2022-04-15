@@ -1,6 +1,6 @@
 const mapConfig = {
-  width: 30,
-  height: 30,
+  width: 50,
+  height: 50,
 };
 
 export default mapConfig;
