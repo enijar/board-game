@@ -15,11 +15,15 @@ export default function Camera({ children }: Props) {
   const [min, max] = React.useMemo(() => {
     return [
       new THREE.Vector3(
-        mapConfig.width * -0.5,
+        mapConfig.width * -0.5 + playerConfig.width * 0.5,
         mapConfig.height * -0.5 + playerConfig.height * 0.5,
         0
       ),
-      new THREE.Vector3(mapConfig.width * 0.5, mapConfig.height * 0.5, 0),
+      new THREE.Vector3(
+        mapConfig.width * 0.5 - playerConfig.width * 0.5,
+        mapConfig.height * 0.5 - playerConfig.height * 0.5,
+        0
+      ),
     ];
   }, []);
 

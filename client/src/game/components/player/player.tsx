@@ -7,7 +7,11 @@ import playerState from "@/game/state/player";
 import playerConfig from "@/game/config/player";
 import { asset } from "@/utils";
 
-export default function Player() {
+type Props = {
+  color?: string;
+};
+
+export default function Player({ color = "#ffd700" }: Props) {
   const actions = useActions();
 
   const { canvas, ctx, texture } = React.useMemo(() => {
@@ -22,23 +26,57 @@ export default function Player() {
   React.useEffect(() => {
     const sprite = new Image();
     sprite.onload = () => updateSprite();
-    sprite.src = asset("/assets/player.png");
+    sprite.src = asset("/assets/player/knight.png");
 
-    const frameDelay = 1000 / 8;
-    const framesX = 4;
-    const framesY = 4;
+    type Config = {
+      [id: string]: {
+        fps: number;
+        frames: number;
+        startX: number;
+        startY: number;
+        width: number;
+        height: number;
+      };
+    };
+
+    const config: Config = {
+      idle: {
+        fps: 8,
+        frames: 4,
+        startX: 0,
+        startY: 22,
+        width: 15,
+        height: 22,
+      },
+      run: {
+        fps: 24,
+        frames: 4,
+        startX: 0,
+        startY: 0,
+        width: 15,
+        height: 22,
+      },
+    };
 
     let nextFrame: number;
-    let frameY = 0;
-    let frameX = 0;
+
     let lastFrameTime = 0;
+    let id = "idle";
+    let scaleX = 1;
+    let scaleY = 1;
+    let frameX = 0;
+    let frameY = 0;
 
     // @todo clean this up or move it to own file
     function updateSprite() {
       nextFrame = requestAnimationFrame(updateSprite);
 
-      const frameWidth = sprite.width / framesX;
-      const frameHeight = sprite.height / framesY;
+      const frameDelay = 1000 / config[id].fps;
+      const frameWidth = config[id].width;
+      const frameHeight = config[id].height;
+      const frames = config[id].frames;
+      const startX = config[id].startX;
+      const startY = config[id].startY;
 
       canvas.width = frameWidth;
       canvas.height = frameHeight;
@@ -49,45 +87,61 @@ export default function Player() {
 
       switch (playerState.direction) {
         case Direction.none:
-          frameX = 0;
-          break;
-        case Direction.up:
-          frameY = 3;
-          break;
-        case Direction.down:
-          frameY = 0;
-          break;
-        case Direction.left:
-          frameY = 1;
+          id = "idle";
           break;
         case Direction.right:
-          frameY = 2;
+          scaleX = 1;
+          id = "run";
+          break;
+        case Direction.left:
+          scaleX = -1;
+          id = "run";
+          break;
+        case Direction.down:
+          id = "run";
+          break;
+        case Direction.up:
+          id = "run";
           break;
       }
 
-      ctx.clearRect(0, 0, frameWidth, frameHeight);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.globalCompositeOperation = "destination-atop";
+      ctx.globalAlpha = 0.25;
+
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, frameWidth, frameHeight);
+
+      ctx.globalAlpha = 1;
+
+      ctx.save();
+
+      ctx.scale(scaleX, scaleY);
 
       ctx.drawImage(
         sprite,
-        frameWidth * frameX,
-        frameHeight * frameY,
+        startX + frameWidth * frameX,
+        startY + frameHeight * frameY,
         frameWidth,
         frameHeight,
         0,
         0,
-        frameWidth,
-        frameHeight
+        frameWidth * scaleX,
+        frameHeight * scaleY
       );
 
-      if (++frameX > framesX - 1) {
-        frameX = 0;
+      if (++frameX > frames - 1) {
+        frameX = startX;
       }
+
+      ctx.restore();
 
       texture.needsUpdate = true;
     }
 
     return () => cancelAnimationFrame(nextFrame);
-  }, [canvas, ctx, texture]);
+  }, [canvas, ctx, texture, color]);
 
   useFrame(() => {
     let direction: Direction = 0;

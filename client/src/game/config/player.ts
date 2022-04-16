@@ -1,6 +1,6 @@
 const playerConfig = {
-  width: 3,
-  height: 3,
+  width: 1,
+  height: 22 / 15,
 };
 
 export default playerConfig;
