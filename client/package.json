@@ -48,6 +48,7 @@
     "react-router-dom": "^6.3.0",
     "styled-components": "^5.3.5",
     "three": "^0.139.2",
+    "three-mesh-bvh": "^0.5.10",
     "use-model-validation": "^0.2.6",
     "zustand": "^3.7.2"
   }
